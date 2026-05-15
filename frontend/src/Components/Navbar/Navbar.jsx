@@ -99,7 +99,7 @@ const Navbar = () => {
       </nav>
 
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-72 max-w-[85vw] border-l border-slate-200 bg-white px-6 py-5 text-slate-950 shadow-xl transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed bottom-0 right-0 top-0 z-50 h-dvh min-h-screen w-72 max-w-[85vw] overflow-y-auto border-l border-slate-200 bg-white px-6 py-5 text-slate-950 shadow-xl transition-transform duration-300 ease-in-out lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
