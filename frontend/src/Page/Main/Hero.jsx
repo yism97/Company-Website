@@ -36,8 +36,8 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="flex-1 w-full max-w-2xl lg:max-w-none">
-            <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl shadow-xl">
+          <div className="flex-1 flex w-full justify-center lg:justify-end">
+            <div className="relative aspect-4/3 w-full max-w-2xl overflow-hidden rounded-2xl shadow-xl">
               <img
                 src={heroImage}
                 alt="태양광 설비 이미지"
