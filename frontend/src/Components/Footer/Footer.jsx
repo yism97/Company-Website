@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
   return (
@@ -83,7 +83,7 @@ const Footer = () => {
               <li>서울특별시 강남구</li>
               <li>삼성동 123번지</li>
               <li>TEL: 02-1234-5678</li>
-              <li>Email: info@example.com</li>
+              <li>Email: sunfuture@company.com</li>
               <li>FAX: 02-1111-2222</li>
             </ul>
           </div>
