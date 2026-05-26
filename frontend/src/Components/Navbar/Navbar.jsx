@@ -58,7 +58,7 @@ const Navbar = () => {
           className="shrink-0 text-xl font-extrabold tracking-normal text-slate-950"
           aria-label="ABC Company home"
         >
-          SunFuture Company
+          SunFuture
         </Link>
 
         <ul className="hidden items-center gap-8 text-sm font-semibold text-slate-700 lg:flex">
