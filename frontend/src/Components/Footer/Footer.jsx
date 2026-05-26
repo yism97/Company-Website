@@ -1,5 +1,12 @@
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+} from 'react-icons/fa';
+import { SiKakaotalk } from 'react-icons/si';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -14,8 +21,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
             <h3 className="text-xl font-bold mb-4">회사 소개</h3>
-            <p className="text-sm leading-7 text-gray-400">
-              저희 회사는 최고의 서비스를 제공하기 위해 노력하고 있습니다.
+            <p className="text-sm leading-6">
+              저희 회사는 항상 최고의 서비스를 제공하기 위해
+              <br />
+              노력하고 있습니다.
             </p>
           </div>
           <div>
@@ -114,12 +123,24 @@ const Footer = () => {
               >
                 <FaLinkedin />
               </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <FaYoutube />
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <SiKakaotalk />
+              </a>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p> Copyrights &copy; 2024 ABC Company. All rights reserved.</p>
+          <p> Copyrights &copy; 2020-2026 SunFuture. All rights reserved.</p>
         </div>
       </div>
     </footer>
