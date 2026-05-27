@@ -2,9 +2,9 @@
 
 @font-face {
   font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2")
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/PretendardVariable.woff2")
     format("woff2");
-  font-weight: 800;
+  font-weight: 45 920;
   font-display: swap;
 }
 
