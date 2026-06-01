@@ -21,7 +21,7 @@ const About = () => {
         <h2 className="text-4xl font-bold mb-8 text-slate-900 text-center">
           회사 소개
         </h2>
-        <div className="text-lg leading-relaxed text-gray-600 space-y-6">
+        <div className="text-xl leading-relaxed text-gray-600 space-y-6 font-normal">
           <p>
             Sunfuture Company는 1995년 설립 이래로 전력 변환 장치 및 전력 제어
             시스템 분야에서 혁신적인 솔루션을 제공해온 선도적인 전기 기업입니다.
@@ -55,9 +55,9 @@ const About = () => {
           </div>
         ))}
       </div>
-      <div className="mb-24 max-w-4xl mx-auto text-center">
+      <div className="mb-24 max-w-5xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-8 text-slate-900">회사 비전</h2>
-        <p className="text-2xl leading-relaxed text-gray-600 font-light">
+        <p className="text-2xl leading-relaxed text-gray-600 font-normal">
           지속 가능한 에너지 미래를 위한 혁신적인 기술과 솔루션을 제공하여, 전
           세계 사용자에게 안정적이고 친환경적인 전력 공급을 실현하는 것을
           미션으로 삼습니다. 우리는 기술의 발전을 통해 사회와 환경에 긍정적인
