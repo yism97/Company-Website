@@ -36,8 +36,8 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="flex-1 flex w-full justify-center lg:justify-end">
-            <div className="relative aspect-4/3 w-full max-w-2xl overflow-hidden rounded-2xl shadow-xl">
+          <div className="order-first flex-1 w-full max-w-2xl lg:order-0 lg:max-w-none lg:scale-105">
+            <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl shadow-xl">
               <img
                 src={heroImage}
                 alt="태양광 설비 이미지"
@@ -60,7 +60,7 @@ const Hero = () => {
             { number: '100%', label: '맞춤형 설계' },
           ].map((item, index) => (
             <div key={index} className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">
+              <div className="text-3xl sm:text-4xl font-medium text-blue-600 mb-2">
                 {item.number}
               </div>
               <div className="text-gray-600 font-semibold">{item.label}</div>

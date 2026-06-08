@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/PretendardVariable.woff2")
-    format("woff2");
-  font-weight: 45 920;
-  font-display: swap;
+    font-family: 'Daeojamjil';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil2Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
 }
 
 body {
-  font-family: "Pretendard", sans-serif;
+  font-family: "Daeojamjil", sans-serif;
 }
