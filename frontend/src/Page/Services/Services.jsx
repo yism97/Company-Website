@@ -1,5 +1,147 @@
 const Services = () => {
-  return <div>Services</div>;
+  const servicesList = [
+    {
+      id: 1,
+      title: '맞춤형 소프트웨어 개발',
+      description: '고객의 요구사항에 맞는 최적화된 솔루션을 제공합니다.',
+      icon: '💻',
+    },
+    {
+      id: 2,
+      title: '클라우드 서비스',
+      description: '안정적이고 확장 가능한 클라우드 인프라 구축 및 관리',
+      icon: '☁️',
+    },
+    {
+      id: 3,
+      title: '보안 솔루션',
+      description: '최신 보안 기술을 적용한 안전한 시스템 구축',
+      icon: '🔒',
+    },
+    {
+      id: 4,
+      title: '기술 컨설팅',
+      description: '전문가의 분석을 통한 최적의 기술 전략 수립',
+      icon: '📊',
+    },
+  ];
+  return (
+    <main className="bg-white">
+      <section className="container mx-auto max-w-7xl px-4 py-28">
+        <div className="mb-16">
+          <p className="mb-4 text-sm font-bold uppercase tracking-widest text-blue-600">
+            Our Services
+          </p>
+          <h1 className="mb-6 text-3xl font-bold leading-tight text-slate-950 sm:text-4xl lg:text-5xl">
+            에너지 설비에 필요한 핵심 기술을 제공합니다
+          </h1>
+          <p className="max-w-3xl text-lg leading-relaxed text-gray-600">
+            Sunfuture는 태양광 설비, 전력 변환, 전력 보호, 유지보수까지 전력
+            인프라 전 과정을 지원합니다.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 mb-16">
+          {servicesList.map((service) => (
+            <article
+              key={service.id}
+              className="rounded-lg bg-white p-8 shadow-lg transition-shadow duration-300 hover:shadow-2xl text-center md:text-left"
+            >
+              <div className="mb-4 text-4xl">{service.icon}</div>
+              <h3 className="mb-4 text-xl font-semibold text-gray-950">
+                {service.title}
+              </h3>
+              <p className="leading-relaxed text-gray-600">
+                {service.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="text-center py-28">
+        <h2 className="mb-8 text-3xl font-bold text-gray-950">
+          왜 우리를 선택해야 하나요?
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              10년+ 경험
+            </h3>
+            <p className="text-gray-600">다양한 산업에서 쌓은 풍부한 경험</p>
+          </div>
+          <div className="bg-gray-50 p-6 rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl">
+            <h4 className="text-xl font-semibold text-gray-800 mb-2">
+              전문가 팀
+            </h4>
+            <p className="text-gray-600">숙련된 개발자와 컨설턴트로 구성</p>
+          </div>
+          <div className="bg-gray-50 p-6 rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl">
+            <h4 className="text-xl font-semibold text-gray-800 mb-2">
+              24/7 지원
+            </h4>
+            <p className="text-gray-600">연중무휴 기술 지원 서비스</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-32 bg-slate-50 py-20">
+        <h2 className="text-3xl font-bold text-gray-800 mb-16 text-center">
+          프로젝트 진행 프로세스
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {[
+            {
+              step: '01',
+              title: '요구사항 분석',
+              desc: '고객의 니즈와 목표를 정확히 파악',
+            },
+            {
+              step: '02',
+              title: '설계 및 기획',
+              desc: '최적의 솔루션 설계와 개발 계획 수립',
+            },
+            {
+              step: '03',
+              title: '개발 및 테스트',
+              desc: '체계적인 개발과 품질 검증 진행',
+            },
+            {
+              step: '04',
+              title: '배포 및 유지보수',
+              desc: '안정적인 서비스 운영과 지속적인 개선',
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="relative p-6 bg-white rounded-xl text-center md:text-left shadow-lg transition-shadow duration-300 hover:shadow-2xl"
+            >
+              <div className="text-blue-600 text-5xl font-bold mb-4">
+                {item.step}
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+              <p className="text-gray-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-32 bg-blue-600 rounded-2xl p-12 text-center text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          프로젝트를 시작할 준비가 되셨나요?
+        </h2>
+        <p className="text-xl mb-8">
+          전문가와 상담하고 최적의 솔루션을 찾아보세요
+        </p>
+        <a
+          href="/contact"
+          className="bg-white text-blue-600 mt-20 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+        >
+          무료 상담 신청하기
+        </a>
+      </section>
+    </main>
+  );
 };
 
 export default Services;
