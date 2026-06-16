@@ -37,12 +37,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    if (user.isLoggedIn) {
-      return res.status(400).json({
-        message: '이미 로그인된 계정입니다.',
-      });
-    }
-
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       user.failedLoginAttempts += 1;
@@ -150,7 +144,7 @@ router.post("/verify-token", async (req, res) => {
   try {
     const token = req.cookies.token;
     if (!token) {
-      return res.status(400).json({ isValid: false, message: '토큰이 없습니다.' });
+      return res.status(401).json({ isValid: false, message: '토큰이 없습니다.' });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.userId);
@@ -160,7 +154,12 @@ router.post("/verify-token", async (req, res) => {
     res.status(200).json({ isValid: true, message: '인증 토큰이 유효합니다.', user });
   } catch (error) {
     console.error('인증 토큰 검증 오류:', error.message);
-    res.status(500).json({ error: '서버 오류가 발생했습니다.' });
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    });
+    res.status(401).json({ isValid: false, message: '인증 토큰이 유효하지 않습니다.' });
   }
 });
 
