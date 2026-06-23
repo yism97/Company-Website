@@ -29,7 +29,7 @@ const AdminNavbar = () => {
             <Link to="/admin/posts" className="text-2xl font-bold">관리자 페이지</Link>
           </div>
           <div className = "hidden text-lg lg:flex items-center gap-4"> 
-            <Link to="/admin/posts" className="hover:text-gray-300">게시글</Link>
+            <Link to="/admin/posts" className="hover:text-gray-300">게시글 관리</Link>
             <Link to="/admin/contacts" className="hover:text-gray-300">문의 관리</Link>
             <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Logout</button>
           </div>

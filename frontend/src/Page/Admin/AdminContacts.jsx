@@ -7,7 +7,10 @@ const AdminContacts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('전체 상태');
   const [currentPage, setCurrentPage] = useState(1);
+  const [editingId, setEditingId] = useState(null);
   const itemsPerPage = 5;
+
+  const statusOptions = ['대기중', '진행중', '완료'];
 
   useEffect(() => {
     fetchContacts();
@@ -24,13 +27,14 @@ const AdminContacts = () => {
     }
   };
 
-  const handleToggleRead = async (id, currentReadStatus) => {
-    if (currentReadStatus) return;
+  const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.patch(`/api/contacts/${id}/read`, {}, { withCredentials: true });
-      setContacts(contacts.map(c => c._id === id ? { ...c, isRead: true } : c));
+      await axios.patch(`/api/contacts/${id}/status`, { status: newStatus }, { withCredentials: true });
+      setContacts(contacts.map(c => c._id === id ? { ...c, status: newStatus } : c));
+      setEditingId(null);
     } catch (error) {
-      console.error('읽음 처리 실패:', error);
+      console.error('상태 변경 실패:', error);
+      alert('상태 변경에 실패했습니다.');
     }
   };
 
@@ -44,17 +48,34 @@ const AdminContacts = () => {
     }
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case '대기중': return 'bg-blue-100 text-blue-700 border-blue-200';
+      case '진행중': return 'bg-amber-100 text-amber-700 border-amber-200';
+      case '완료': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      default: return 'bg-gray-100 text-gray-700 border-gray-200';
+    }
+  };
+
+  const getCardBorderColor = (status) => {
+    switch (status) {
+      case '대기중': return 'border-l-4 border-l-blue-500';
+      case '진행중': return 'border-l-4 border-l-amber-500';
+      case '완료': return 'border-l-4 border-l-emerald-500';
+      default: return '';
+    }
+  };
+
   // 검색 및 필터 로직
   const filteredContacts = contacts.filter((contact) => {
     const matchesSearch =
       contact.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.email.toLowerCase().includes(searchTerm.toLowerCase());
+      contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (contact.phone && contact.phone.includes(searchTerm));
 
     const matchesStatus =
-      filterStatus === '전체 상태' ||
-      (filterStatus === '읽음' && contact.isRead) ||
-      (filterStatus === '안읽음' && !contact.isRead);
+      filterStatus === '전체 상태' || contact.status === filterStatus;
 
     return matchesSearch && matchesStatus;
   });
@@ -88,7 +109,7 @@ const AdminContacts = () => {
         <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center">
           <input
             type="text"
-            placeholder="제목, 이름, 이메일 검색"
+            placeholder="제목, 이름, 이메일, 연락처 검색"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -105,8 +126,9 @@ const AdminContacts = () => {
             className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-blue-600 shadow-sm md:w-48"
           >
             <option value="전체 상태">전체 상태</option>
-            <option value="읽음">읽음</option>
-            <option value="안읽음">안읽음</option>
+            {statusOptions.map(status => (
+              <option key={status} value={status}>{status}</option>
+            ))}
           </select>
         </div>
 
@@ -122,26 +144,47 @@ const AdminContacts = () => {
               {currentContacts.map((contact) => (
                 <div
                   key={contact._id}
-                  className={`rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all ${
-                    !contact.isRead ? 'border-l-4 border-l-blue-500' : ''
-                  }`}
+                  className={`rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all ${getCardBorderColor(contact.status)}`}
                 >
                   <div className="mb-4 flex flex-col items-start justify-between gap-4 md:flex-row">
                     <div className="flex-1">
-                      <h2 className="text-xl font-bold text-slate-900">{contact.subject}</h2>
+                      <div className="mb-2 flex items-center gap-3">
+                        <span className={`rounded-full border px-2.5 py-0.5 text-xs font-bold ${getStatusColor(contact.status)}`}>
+                          {contact.status}
+                        </span>
+                        <h2 className="text-xl font-bold text-slate-900">{contact.subject}</h2>
+                      </div>
                       <p className="mt-1 text-sm text-gray-500">
-                        <span className="font-semibold text-slate-700">{contact.name}</span> ({contact.email}) <br className="md:hidden" />
+                        <span className="font-semibold text-slate-700">{contact.name}</span> ({contact.email}) | {contact.phone} <br className="md:hidden" />
                         <span className="hidden md:inline"> • </span>
                         {new Date(contact.createdAt).toLocaleString()}
                       </p>
                     </div>
                     <div className="flex w-full gap-2 md:w-auto">
-                      {!contact.isRead && (
+                      {editingId === contact._id ? (
+                        <div className="flex gap-2">
+                          <select
+                            value={contact.status}
+                            onChange={(e) => handleStatusChange(contact._id, e.target.value)}
+                            className="rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-semibold outline-none focus:border-blue-600"
+                          >
+                            {statusOptions.map(opt => (
+                              <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="rounded-md bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-200"
+                          >
+                            취소
+                          </button>
+                        </div>
+                      ) : (
                         <button
-                          onClick={() => handleToggleRead(contact._id, contact.isRead)}
+                          onClick={() => setEditingId(contact._id)}
                           className="flex-1 rounded-md bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-100 md:flex-none"
                         >
-                          읽음 표시
+                          수정
                         </button>
                       )}
                       <button
