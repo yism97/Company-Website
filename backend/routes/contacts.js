@@ -26,10 +26,11 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
-// 문의 읽음 처리
-router.patch('/:id/read', authenticate, async (req, res) => {
+// 문의 상태 변경
+router.patch('/:id/status', authenticate, async (req, res) => {
   try {
-    const contact = await Contact.findByIdAndUpdate(req.params.id, { isRead: true }, { new: true });
+    const { status } = req.body;
+    const contact = await Contact.findByIdAndUpdate(req.params.id, { status }, { returnDocument: 'after' });
     res.json(contact);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -48,8 +49,8 @@ router.delete('/:id', authenticate, async (req, res) => {
 
 // 문의 작성 (공개용)
 router.post('/', async (req, res) => {
-  const { name, email, subject, message } = req.body;
-  const contact = new Contact({ name, email, subject, message });
+  const { name, email, phone, subject, message } = req.body;
+  const contact = new Contact({ name, email, phone, subject, message });
 
   try {
     const newContact = await contact.save();

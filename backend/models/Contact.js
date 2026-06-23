@@ -9,6 +9,10 @@ const ContactSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+    required: true,
+  },
   subject: {
     type: String,
     required: true,
@@ -17,9 +21,10 @@ const ContactSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isRead: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    enum: ['대기중', '진행중', '완료'],
+    default: '대기중',
   },
   createdAt: {
     type: Date,
