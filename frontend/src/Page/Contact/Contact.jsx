@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
 const contactInfo = [
   { label: '전화', value: '02-1234-5678' },
   { label: '이메일', value: 'sunfuture@company.com' },
@@ -6,6 +9,47 @@ const contactInfo = [
 ];
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    subject: '태양광 설비 상담',
+    message: '',
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    const fieldMap = {
+      'contact-name': 'name',
+      'contact-phone': 'phone',
+      'contact-email': 'email',
+      'contact-type': 'subject',
+      'contact-message': 'message',
+    };
+    setFormData((prev) => ({
+      ...prev,
+      [fieldMap[id]]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/api/contacts', formData);
+      alert('문의가 성공적으로 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.');
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        subject: '태양광 설비 상담',
+        message: '',
+      });
+    } catch (error) {
+      console.error('문의 제출 실패:', error);
+      alert('문의 제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white">
       <section className="container mx-auto max-w-7xl px-4 py-28">
@@ -23,7 +67,7 @@ const Contact = () => {
         </div>
 
         <div className="grid gap-10 lg:grid-cols-[1fr_420px]">
-          <form className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg sm:p-8">
+          <form onSubmit={handleSubmit} className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg sm:p-8">
             <div className="grid gap-5 md:grid-cols-2">
               <div className="block">
                 <label
@@ -35,6 +79,9 @@ const Contact = () => {
                 <input
                   id="contact-name"
                   type="text"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
                   className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-blue-600"
                   placeholder="홍길동"
                 />
@@ -49,6 +96,9 @@ const Contact = () => {
                 <input
                   id="contact-phone"
                   type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={handleChange}
                   className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-blue-600"
                   placeholder="010-0000-0000"
                 />
@@ -63,6 +113,9 @@ const Contact = () => {
                 <input
                   id="contact-email"
                   type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-blue-600"
                   placeholder="name@example.com"
                 />
@@ -76,6 +129,8 @@ const Contact = () => {
                 </label>
                 <select
                   id="contact-type"
+                  value={formData.subject}
+                  onChange={handleChange}
                   className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-blue-600"
                 >
                   <option>태양광 설비 상담</option>
@@ -94,13 +149,16 @@ const Contact = () => {
                 <textarea
                   id="contact-message"
                   rows="7"
+                  required
+                  value={formData.message}
+                  onChange={handleChange}
                   className="h-40 w-full rounded-lg border border-gray-200 px-4 py-3 outline-none transition focus:border-blue-600"
                   placeholder="문의 내용을 입력해주세요."
                 />
               </div>
             </div>
             <button
-              type="button"
+              type="submit"
               className="mt-6 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors duration-300 hover:bg-blue-700 sm:w-auto"
             >
               문의 보내기
