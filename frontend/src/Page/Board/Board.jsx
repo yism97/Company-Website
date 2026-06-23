@@ -106,9 +106,10 @@ const Board = () => {
         </div>
 
         <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg">
-          <div className="hidden grid-cols-[100px_1fr_120px_140px] border-b border-gray-100 bg-slate-50 px-6 py-4 text-sm font-bold text-slate-600 md:grid">
+          <div className="hidden grid-cols-[100px_1fr_110px_120px_140px] border-b border-gray-100 bg-slate-50 px-6 py-4 text-sm font-bold text-slate-600 md:grid">
             <span>분류</span>
             <span>제목</span>
+            <span>첨부</span>
             <span>작성자</span>
             <span>작성일</span>
           </div>
@@ -118,20 +119,39 @@ const Board = () => {
           ) : currentPosts.length === 0 ? (
             <div className="py-20 text-center text-gray-500">등록된 게시글이 없습니다.</div>
           ) : (
-            currentPosts.map((post) => (
-              <article
-                key={post._id}
-                onClick={() => navigate(`/board/${post._id}`)}
-                className="grid gap-3 border-b border-gray-100 px-6 py-5 last:border-b-0 hover:bg-blue-50 md:grid-cols-[100px_1fr_120px_140px] md:items-center cursor-pointer"
-              >
-                <span className="w-fit rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-600">
-                  {getCategoryLabel(post.category)}
-                </span>
-                <h2 className="font-semibold text-slate-950">{post.title}</h2>
-                <span className="text-sm text-gray-600">{post.author?.username || '관리자'}</span>
-                <span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</span>
-              </article>
-            ))
+            currentPosts.map((post) => {
+              const attachmentCount = (post.attachments?.length || 0) + (post.images?.length || 0);
+              return (
+                <article
+                  key={post._id}
+                  onClick={() => navigate(`/board/${post._id}`)}
+                  className="grid gap-3 border-b border-gray-100 px-6 py-5 last:border-b-0 hover:bg-blue-50 md:grid-cols-[100px_1fr_110px_120px_140px] md:items-center cursor-pointer"
+                >
+                  <span className="w-fit rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-600">
+                    {getCategoryLabel(post.category)}
+                  </span>
+                  <h2 className="font-semibold text-slate-950">{post.title}</h2>
+                  <span className={`text-sm flex items-center gap-1.5 ${
+                    attachmentCount > 0 
+                      ? 'text-blue-600 font-semibold' 
+                      : 'text-gray-400 hidden md:flex'
+                  }`}>
+                    {attachmentCount > 0 ? (
+                      <>
+                        <svg className="h-4 w-4 flex-shrink-0 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                        </svg>
+                        <span>{`첨부 ${attachmentCount}개`}</span>
+                      </>
+                    ) : (
+                      <span>-</span>
+                    )}
+                  </span>
+                  <span className="text-sm text-gray-600">{post.author?.username || '관리자'}</span>
+                  <span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</span>
+                </article>
+              );
+            })
           )}
         </div>
 

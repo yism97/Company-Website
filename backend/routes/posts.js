@@ -133,7 +133,7 @@ router.put('/:id', authenticate, upload.fields([
         attachments: finalAttachments,
         updatedAt: Date.now() 
       },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     res.json(updatedPost);
